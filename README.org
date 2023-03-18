@@ -1,8 +1,8 @@
-#+title: ~difficult-purescript-nix~
+#+title:
 
 * ~difficult-purescript-nix~
 
-~difficult-purescript-nix~ is a flakes-friendly (and more ... difficult) alternative to[[github:justinwoo/easy-purescript-nix][ ~easy-purescript-nix~]].
+~difficult-purescript-nix~ is a flakes-friendly (and more ... difficult) alternative to[[github:justinwoo/easy-purescript-nix][ ~easy-purescript-nix~]] .
 
 * How do I use it?
 
@@ -34,9 +34,6 @@ Here is a (contrived) example of using ~difficult-purescript-nix~ in your own fl
   outputs = { self, nixpkgs, flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.systems.flakeExposed;
-      imports = [
-        flake-parts.flakeModules.easyOverlay
-      ];
 
       perSystem = { config, pkgs, lib, system, ... }:
         {

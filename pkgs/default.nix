@@ -6,6 +6,43 @@ let
 in
 {
   lib = plib;
+} // lib.mapAttrs' plib.mkSpago {
+  "0.20.9" = {
+    x86_64-linux = "sha256-FQBjake5UcediFcg0Anq7tmbGQuXn6NhbeSVTkOmMDU=";
+    x86_64-darwin = "sha256-Cf8mBu4BMhRgHNLU/sOuLPCUHtoPAg7VLcYOkdsl0bA=";
+  };
+  "0.20.8" = {
+    x86_64-linux = "sha256-GW6gT07nzdvRJxRvZpMlT8Szl2JA15BGteP9aDwhH8Y=";
+    x86_64-darwin = "sha256-BzDSxVYWpuDS0xTNzxf1vmReevrVBPEmH2A4dYTrmoE=";
+  };
+  "0.20.7" = {
+    x86_64-linux = "sha256-anbUnX7g1X34Ut+x6yQ8S/U89lT2RuziNGA8F3IrAS4=";
+    x86_64-darwin = "sha256-ivZ07sSKf9Dt4IJcqsB4Xm0TbP3gwAP9Vpo+PMl/v2g=";
+  };
+  "0.20.5" = {
+    x86_64-linux = "sha256-wIuZJIxas5DGlNduVp3WLqoTO4+yvcdVcWC8sbEQLMw=";
+    x86_64-darwin = "sha256-wiq6ljlj3YNl6cAI1Elz/tZP4ma4VIM8jN/JZ+2y5Hk=";
+  };
+  "0.20.4" = {
+    x86_64-linux = "sha256-Aq3bUXomSodKyeag4FgM6HQiEG3qqWR5fWcow6hUU2M=";
+    x86_64-darwin = "sha256-uzoknbKeTnE52Cg9iVX8oxU4ordCpmevWf+JObvO9XA=";
+  };
+  "0.20.3" = {
+    x86_64-linux = "sha256-Aq3bUXomSodKyeag4FgM6HQiEG3qqWR5fWcow6hUU2M=";
+    x86_64-darwin = "sha256-uzoknbKeTnE52Cg9iVX8oxU4ordCpmevWf+JObvO9XA=";
+  };
+  "0.20.2" = {
+    x86_64-linux = "sha256-gf28L6AXBYeOyankM9/AJQGwRmr8opG6ycE3zO09Rrw=";
+    x86_64-darwin = "sha256-PvzEBbzo3BvQRHV/4VAX/lIuJFQ/7wz0dobiIjPciH8=";
+  };
+  "0.20.1" = {
+    x86_64-linux = "sha256-A4onH1hrVxXV4fPCyGp3U2odZd2FyVLhGMNBMxg4IiE=";
+    x86_64-darwin = "sha256-tmTqe5LP8OYCI5PirAmmUZ02+AIUDy9Rn5XDQNL6h2w=";
+  };
+  "0.20.0" = {
+    x86_64-linux = "sha256-cwAuNcHB1Geeb8woPpwq1SwCF48oAHyzSBup1m1D+Rw=";
+    x86_64-darwin = "sha256-/HS6U/4X1NSfr3XOXTTidyPquVh+ph2R9W9bXCy2sdM=";
+  };
 } // lib.mapAttrs' plib.mkPurs {
   "v0.15.7" = {
     x86_64-linux = "sha256-s1BH/9340Yz3OJL3uVHLCQiAs81IV1QAXj9NQ2bGUgw=";

@@ -28,14 +28,8 @@ stdenv.mkDerivation rec {
         + " Rosetta 2 translation, no guarantees can be made about stability or"
         + " performance.";
       urls = rec {
-        x86_64-linux = {
-          url = mkUrl "linux64";
-          sha256 = sha256s.x86_64-linux;
-        };
-        x86_64-darwin = {
-          url = mkUrl "macos";
-          sha256 = sha256s.x86_64-darwin;
-        };
+        x86_64-linux = { url = mkUrl "linux64"; sha256 = sha256s.x86_64-linux; };
+        x86_64-darwin = { url = mkUrl "macos"; sha256 = sha256s.x86_64-darwin; };
         aarch64-darwin = builtins.trace msg x86_64-darwin;
       };
     in

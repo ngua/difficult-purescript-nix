@@ -2,13 +2,18 @@
 
 let
   inherit (pkgs) lib;
-in
-rec {
   shortVersion = x:
     lib.strings.removePrefix "v" (builtins.replaceStrings [ "." ] [ "_" ] x);
-  mkPurs =
-    version: sha256s:
+  mk = path: version: sha256s:
+    let
+      name = lib.removeSuffix ".nix" (builtins.baseNameOf path);
+    in
     lib.nameValuePair
-      ("purs-${shortVersion version}")
-      (pkgs.callPackage ./purs.nix { inherit version sha256s; });
+      ("${name}-${shortVersion version}")
+      (pkgs.callPackage path { inherit version sha256s; });
+in
+rec {
+  inherit shortVersion;
+  mkPurs = mk ../pkgs/purs.nix;
+  mkSpago = mk ../pkgs/spago.nix;
 }

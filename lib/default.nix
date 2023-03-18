@@ -11,9 +11,13 @@ let
     lib.nameValuePair
       ("${name}-${shortVersion version}")
       (pkgs.callPackage path { inherit version sha256s; });
+  mkNpmFetch = pname: version: sha256:
+    lib.nameValuePair
+      ("${pname}-${shortVersion version}")
+      (pkgs.callPackage ../pkgs/npm-fetch.nix { inherit pname version sha256; });
 in
 rec {
-  inherit shortVersion;
+  inherit shortVersion mkNpmFetch;
   mkPurs = mk ../pkgs/purs.nix;
   mkSpago = mk ../pkgs/spago.nix;
 }

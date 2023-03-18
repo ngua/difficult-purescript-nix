@@ -5,17 +5,13 @@ let
   plib = import ../lib { inherit pkgs; };
 in
 rec {
-  # TODO
-  # Maybe add different versions, will need to use `npmBuildPackage` presumably
   inherit (pkgs.nodePackages_latest)
-    purescript-language-server
-    purs-tidy
-    purty
-    purescript-psa
-    pscid
-    ;
-  psa = purescript-psa;
+    purescript-language-server purs-tidy purty purescript-psa pscid;
   lib = plib;
+  psa = purescript-psa;
+} // lib.mapAttrs' (plib.mkNpmFetch "purescript-language-server") {
+  "0.17.1" = "sha256-xYndEBqO5QSluGJQW8CtmgGbsQBKQ4Qq+dZSoFxdC6Y=";
+  "0.16.6" = "sha256-2INDRzyJ4F6X1Uu3sUj8klqZf5qibf4ZBy1detZ6UKE=";
 } // lib.mapAttrs' plib.mkSpago {
   "0.20.9" = {
     x86_64-linux = "sha256-FQBjake5UcediFcg0Anq7tmbGQuXn6NhbeSVTkOmMDU=";

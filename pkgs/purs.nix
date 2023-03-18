@@ -1,3 +1,5 @@
+# Parts of this module were adapted from https://github.com/justinwoo/easy-purescript-nix,
+# licensed under MIT, (c) Justin Woo
 { stdenv
 , lib
 , zlib

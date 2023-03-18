@@ -16,6 +16,7 @@ let
       (
         pkgs.callPackage ../pkgs/npm-fetch.nix {
           inherit pname version lib sha256;
+          src = ../pkgs/${pname}/v${version};
         }
       );
 in

@@ -1,34 +1,19 @@
-{ lib
-, stdenv
-, nodejs
+{ src
 , pname
 , version
+, lib
+, stdenv
 , sha256
+, buildNpmPackage
 , ...
 }:
 
-stdenv.mkDerivation {
-  inherit pname version;
-  outputHashAlgo = "sha256";
-  outputHashMode = "recursive";
-  outputHash = sha256;
-  nativeBuildInputs = [ nodejs ];
-
-  unpackPhase = ''
-    export HOME="$(mktemp -d npmXXX)"
-    chmod +rwx "$HOME"
-    mkdir -p ./node_modules
-    npm i --silent ${pname}@${version} --prefix .
+buildNpmPackage rec {
+  inherit pname version src;
+  npmDepsHash = sha256;
+  dontNpmBuild = true;
+  postInstall = ''
+    mkdir $out/bin
+    ln -s $out/lib/node_modules/${pname}/node_modules/.bin/${pname} $out/bin/
   '';
-  buildPhase = ''
-    patchShebangs ./node_modules
-  '';
-  installPhase = ''
-    mkdir -p $out/bin
-    cp -r ./node_modules/ $out/node_modules
-    ln -s $out/node_modules/.bin/${pname} $out/bin/
-  '';
-  meta = {
-    sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
-  };
 }

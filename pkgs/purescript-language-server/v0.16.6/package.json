@@ -1,0 +1,5 @@
+{
+  "name": "purescript-language-server",
+  "version": "0.16.6",
+  "dependencies": { "purescript-language-server": "0.16.6" }
+}

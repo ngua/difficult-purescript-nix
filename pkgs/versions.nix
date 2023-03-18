@@ -7,20 +7,20 @@ plib.foldMergeAttrs
   [
     (
       lib.mapAttrs' (plib.mkNpmFetch "purescript-language-server") {
-        "0.17.1" = "sha256-xYndEBqO5QSluGJQW8CtmgGbsQBKQ4Qq+dZSoFxdC6Y=";
-        "0.16.6" = "sha256-2INDRzyJ4F6X1Uu3sUj8klqZf5qibf4ZBy1detZ6UKE=";
+        "0.17.1" = "sha256-buGifu6r8lEl5HVIMKKQOAPiHLUc11JtAiAOB4xyufQ=";
+        "0.16.6" = "sha256-aBk8Jh5aXPxsAxZSS7E6XUi3CVAujP8TCpfouoYhBQ0=";
       }
     )
 
     (
       lib.mapAttrs' (plib.mkNpmFetch "purs-tidy") {
-        "0.7.2" = "sha256-mTd6mn9tbFCZP2G7gjWVb3wzaWWJAn0X5RUHOdrr6TY=";
+        "0.7.2" = "sha256-C9SbefXNi1oQOIceORatREbKSImiHpdgwPQR719pnMM=";
       }
     )
 
     (
       lib.mapAttrs' (plib.mkNpmFetch "pulp") {
-        "15.0.0" = "sha256-nFE9+FyoPqmvw7zISuQqCs3hPNoB+G44YHqzl7jpiGU=";
+        "15.0.0" = "sha256-3jR4ysk9P5W4/c6T9oF1EbEcqiiZuNkg4iHhidMH28c=";
       }
     )
 

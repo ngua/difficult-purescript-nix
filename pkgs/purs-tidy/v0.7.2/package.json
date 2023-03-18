@@ -1,0 +1,5 @@
+{
+  "name": "purs-tidy",
+  "version": "0.7.2",
+  "dependencies": { "purs-tidy": "0.7.2" }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "pulp",
+  "version": "12.4.2",
+  "dependencies": { "pulp": "12.4.2" }
+}

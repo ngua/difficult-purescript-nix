@@ -27,6 +27,15 @@
           ;
 
           checks = {
+            statix = pkgs.runCommand "statix"
+              {
+                nativeBuildInputs = [ pkgs.statix ];
+              }
+              ''
+                cd ${self}
+                statix check
+                touch $out
+              '';
             packages = pkgs.runCommand "all-packages"
               {
                 ps = builtins.attrValues self.packages.${system};

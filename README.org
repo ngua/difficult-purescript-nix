@@ -1,0 +1,103 @@
+#+title: ~difficult-purescript-nix~
+
+* ~difficult-purescript-nix~
+~difficult-purescript-nix~ is a flakes-friendly (and more ... difficult) alternative to[[github:justinwoo/easy-purescript-nix][ ~easy-purescript-nix~]].
+
+* How do I use it?
+
+~difficult-purescript-nix~ is intended to be consumed as a flake input. You can then apply ~inputs.difficult-purescript-nix.overlays.default~, which will add the attribute set ~purescriptPackages~ to your package set. This contains the following packages:
+- ~purs~
+- ~spago~
+- ~purs-tidy~
+- ~purescript-language-server~
+- ~purescript-psa~ / ~psa~
+- ~pulp~
+- ~purty~
+- ~pscid~
+
+Most of these also contain specific versions. For non-versioned packages, e.g. ~purescriptPackages.pscid~, the package is simply an alias to ~nodePackages_latest~. For versioned dependencies, the built packages are fetched from NPM (see [[#versions-of-npm-dependencies][below]] for caveats!).
+
+** Example
+Here is a (contrived) example of using ~difficult-purescript-nix~ in your own flake:
+
+#+begin_src nix
+{
+  inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    difficult-purescript-nix = "github:ngua/difficult-purescript-nix";
+    nixpkgs.follows = "difficult-purescript-nix/nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, flake-parts, ... }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = nixpkgs.lib.systems.flakeExposed;
+      imports = [
+        flake-parts.flakeModules.easyOverlay
+      ];
+
+      perSystem = { config, pkgs, lib, system, ... }:
+        {
+          _module.args.pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              inputs.difficult-purescript-nix.overlays.default
+            ];
+          };
+
+          legacyPackages = {
+            inherit (pkgs.purescriptPackages) purs-0_15_4;
+          };
+        };
+    };
+}
+#+end_src
+
+** Other uses
+
+You can also run, try, or install packages from ~difficult-purescript-nix~ conveniently using the new ~nix~ CLI. All of the Purescript packages available from ~overlays.default~ are also exposed by the flake via the ~legacyPackages~ (under the namespace ~purescriptPackages~) and ~packages~ outputs. For example:
+
+*** Run a specific version of ~purs~
+#+begin_src sh
+nix run github:ngua/difficult-purescript-nix#purs-0_14_2 -- --version
+#+end_src
+*** Install a package to your profile
+#+begin_src sh
+nix profile install github:ngua/difficult-purescript-nix#purs-tidy-0_7_2
+#+end_src
+*** Show all available packages:
+#+begin_src sh
+nix flake show github:ngua/difficult-purescript-nix
+#+end_src
+
+* When should I use it?
+
+As mentioned above, this project is a flake-native adaptation of ~easy-purescript-nix~. I would recommend using ~difficult-purescript-nix~ over the latter in the following situations:
+
+- You want or require a flakes-first workflow
+- You explicitly want Purescript packages exposed as an overlay
+
+In contract, I would recommend ~easy-purescript-nix~ instead, if:
+
+- You can't or don't want to use flakes
+- You want more options for Purescript packages (~easy-purescript-nix~ exposes a few more packages than this repository)
+
+* Caveats
+** Versions of NPM dependencies
+(Note: the following does not apply to specific versions of ~purs~ and ~spago~, which are also fetched as binaries, but not from NPM; that said, other caveats apply to those packages as described [[#systems][below]].)
+
+To get specific versions of packages written in Purescript and published to NPM (e.g. ~purescript-language-server~), ~difficult-purescript-nix~ will fetch them directly from NPM as fixed-output derivations. This is a terrible hack done for the following reasons:
+
+- Building them using ~pkgs.buildNpmPackage~ would be ideal, but their build scripts include ~spago~ invocations that will fail in the Nix build sandbox (see [[github:ngua/spago.nix][spago.nix]] for a more detailed discussion of why building Spago project with Nix is very difficult, at least for its current incarnation).
+- A workaround for this would be to build these as NPM packages indirectly. That is, to make a separate NPM package with only the target package as its dependency, and then use ~buildNpmPackage~. This will also fetch the dependencies from NPM, but comes with extra guarantees and control over the build process. This approach would require maintaining a separate ~package.json~ /and/ ~package-lock.json~ for /each/ indirect NPM "project" representing a versioned Purescript package fetched from NPM, however. Nevertheless, this approach may be implemented in the future.
+
+As a consequence of this hack, there may be some instability in the versioned packages. For example, the hash required to fetch the package as an FOD may change. If this occurs, please open an issue on the repository. As a temporary workaround, you can override the hash for the package (all of the packages use ~callPackage~ internally and can be overridden), e.g.
+
+#+begin_src nix
+pkgs.purescriptPackages.purs-tidy-0_7_2.override {
+  sha256 = "sha256-0000000000000000000000000000000000000000000="
+}
+#+end_src
+
+** Systems
+
+As with ~easy-purescript-nix~ and indeed ~nixpkgs~, ~difficult-purescript-nix~ fetches pre-built binaries for ~spago~ and ~purs~ from their GitHub releases. This has the definite advantage of never requiring a build from source, but also means that only ~x86_64-linux~ and ~x86_64-darwin~ are really supported. I'd like to try to see if it's possible to build from source at least on ~aarch64~ platforms and expand the number of systems that ~difficult-purescript-nix~ supports.

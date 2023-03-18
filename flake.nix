@@ -1,5 +1,5 @@
 {
-  description = "spago.nix";
+  description = "difficult-purescript-nix";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";

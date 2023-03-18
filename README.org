@@ -2,7 +2,7 @@
 
 * ~difficult-purescript-nix~
 
-~difficult-purescript-nix~ is a flakes-friendly (and more ... difficult) alternative to [[https:github.com/justinwoo/easy-purescript-nix][easy-purescript-nix]].
+~difficult-purescript-nix~ is a flakes-friendly (and more ... difficult) alternative to [[https://github.com/justinwoo/easy-purescript-nix][easy-purescript-nix]].
 
 * How do I use it?
 
@@ -89,7 +89,7 @@ In contract, I would recommend ~easy-purescript-nix~ instead, if:
 
 To get specific versions of packages written in Purescript and published to NPM (e.g. ~purescript-language-server~), ~difficult-purescript-nix~ will fetch them directly from NPM as fixed-output derivations. This is a terrible hack done for the following reasons:
 
-- Building them using ~pkgs.buildNpmPackage~, using the upstream repositories as the ~src~, would be ideal, but their build scripts include ~spago~ invocations that will fail in the Nix build sandbox (see [[github:ngua/spago.nix][spago.nix]] for a more detailed discussion of why building Spago project with Nix is very difficult, at least in its current incarnation).
+- Building them using ~pkgs.buildNpmPackage~, using the upstream repositories as the ~src~, would be ideal, but their build scripts include ~spago~ invocations that will fail in the Nix build sandbox (see [[https://github.com/ngua/spago.nix][spago.nix]] for a more detailed discussion of why building Spago project with Nix is very difficult, at least in its current incarnation).
 - A workaround for this would be to build these as NPM packages indirectly. That is, to make a separate NPM package with only the target package as its dependency, and then use ~buildNpmPackage~. This will also fetch the dependencies from NPM, but comes with extra guarantees and control over the build process. This approach would require maintaining a separate ~package.json~ /and/ ~package-lock.json~ for /each/ indirect NPM "project" representing a versioned Purescript package fetched from NPM, however. Nevertheless, this approach may be implemented in the future.
 
 As a consequence of this hack, there may be some instability in the versioned packages. For example, the hash required to fetch the package as an FOD may change. If this occurs, please open an issue on the repository. As a temporary workaround, you can override the hash for the package (all of the packages use ~callPackage~ internally and can be overridden), e.g.

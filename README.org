@@ -2,7 +2,7 @@
 
 * ~difficult-purescript-nix~
 
-~difficult-purescript-nix~ is a flakes-friendly (and more ... difficult) alternative to[[github:justinwoo/easy-purescript-nix][ ~easy-purescript-nix~]] .
+~difficult-purescript-nix~ is a flakes-friendly (and more ... difficult) alternative to [[https:github.com/justinwoo/easy-purescript-nix][easy-purescript-nix]].
 
 * How do I use it?
 
@@ -11,7 +11,7 @@
 - ~spago~
 - ~purs-tidy~
 - ~purescript-language-server~
-- ~purescript-psa~ / ~psa~
+- ~purescript-psa~ / ~psa~
 - ~pulp~
 - ~purty~
 - ~pscid~
@@ -96,7 +96,7 @@ As a consequence of this hack, there may be some instability in the versioned pa
 
 #+begin_src nix
 pkgs.purescriptPackages.purs-tidy-0_7_2.override {
-  sha256 = "sha256-0000000000000000000000000000000000000000000="
+  sha256 = "sha256-0000000000000000000000000000000000000000000=";
 }
 #+end_src
 

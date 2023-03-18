@@ -20,4 +20,4 @@ jobs:
       - run: |
           nix build -L .#checks.x86_64-linux.treefmt
           nix build -L .#checks.x86_64-linux.statix
-          nix build -L .#checks.x86_64-linux.all-packages
+          nix build -L .#checks.x86_64-linux.packages

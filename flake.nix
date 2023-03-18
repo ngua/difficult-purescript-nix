@@ -21,6 +21,22 @@
             purescriptPackages = import ./pkgs { inherit pkgs; };
           };
 
+          packages = builtins.removeAttrs
+            self.legacyPackages.${system}.purescriptPackages
+            [ "lib" ]
+          ;
+
+          checks = {
+            packages = pkgs.runCommand "all-packages"
+              {
+                ps = builtins.attrValues self.packages.${system};
+              }
+              ''
+                echo $ps
+                touch $out
+              '';
+          };
+
           formatter = treefmt-nix.lib.mkWrapper pkgs treefmt.config;
 
           treefmt.config = {

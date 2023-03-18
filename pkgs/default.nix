@@ -2,17 +2,11 @@
 
 let
   inherit (pkgs) lib;
-  mkPurs =
-    let
-      shortVersion = x:
-        lib.strings.removePrefix "v" (builtins.replaceStrings [ "." ] [ "_" ] x);
-    in
-    version: sha256s:
-      lib.nameValuePair
-        ("purs-${shortVersion version}")
-        (pkgs.callPackage ./purs.nix { inherit version sha256s; });
+  plib = import ../lib { inherit pkgs; };
 in
-lib.mapAttrs' mkPurs {
+{
+  lib = plib;
+} // lib.mapAttrs' plib.mkPurs {
   "v0.15.7" = {
     x86_64-linux = "sha256-s1BH/9340Yz3OJL3uVHLCQiAs81IV1QAXj9NQ2bGUgw=";
     x86_64-darwin = "sha256-27R0nuQMclmlCh3E3LHrMHvzEXlDLqzNoYWZP1LWBSs=";

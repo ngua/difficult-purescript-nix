@@ -4,7 +4,17 @@ let
   inherit (pkgs) lib;
   plib = import ../lib { inherit pkgs; };
 in
-{
+rec {
+  # TODO
+  # Maybe add different versions, will need to use `npmBuildPackage` presumably
+  inherit (pkgs.nodePackages_latest)
+    purescript-language-server
+    purs-tidy
+    purty
+    purescript-psa
+    pscid
+    ;
+  psa = purescript-psa;
   lib = plib;
 } // lib.mapAttrs' plib.mkSpago {
   "0.20.9" = {

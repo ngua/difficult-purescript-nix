@@ -12,6 +12,8 @@ rec {
 } // lib.mapAttrs' (plib.mkNpmFetch "purescript-language-server") {
   "0.17.1" = "sha256-xYndEBqO5QSluGJQW8CtmgGbsQBKQ4Qq+dZSoFxdC6Y=";
   "0.16.6" = "sha256-2INDRzyJ4F6X1Uu3sUj8klqZf5qibf4ZBy1detZ6UKE=";
+} // lib.mapAttrs' (plib.mkNpmFetch "purs-tidy") {
+  "0.7.2" = "sha256-mTd6mn9tbFCZP2G7gjWVb3wzaWWJAn0X5RUHOdrr6TY=";
 } // lib.mapAttrs' plib.mkSpago {
   "0.20.9" = {
     x86_64-linux = "sha256-FQBjake5UcediFcg0Anq7tmbGQuXn6NhbeSVTkOmMDU=";

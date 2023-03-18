@@ -1,11 +1,8 @@
 { pkgs
+, lib
 , plib
 , ...
 }:
-
-let
-  inherit (pkgs) lib;
-in
 plib.foldMergeAttrs
   [
     (

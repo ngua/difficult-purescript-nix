@@ -1,9 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
-  inherit (pkgs) lib;
   plib = import ../lib { inherit pkgs; };
-  versions = import ./versions.nix { inherit pkgs plib; };
+  versions = import ./versions.nix { inherit pkgs lib plib; };
 in
 versions // rec {
   inherit (pkgs.nodePackages_latest)

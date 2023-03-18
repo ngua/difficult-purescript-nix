@@ -18,7 +18,7 @@
       perSystem = { config, pkgs, lib, system, ... }:
         rec {
           legacyPackages = {
-            purescriptPackages = import ./pkgs { inherit pkgs; };
+            purescriptPackages = import ./pkgs { inherit pkgs lib; };
           };
 
           packages = builtins.removeAttrs

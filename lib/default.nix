@@ -20,4 +20,5 @@ rec {
   inherit shortVersion mkNpmFetch;
   mkPurs = mk ../pkgs/purs.nix;
   mkSpago = mk ../pkgs/spago.nix;
+  foldMergeAttrs = lib.foldl' lib.mergeAttrs { };
 }

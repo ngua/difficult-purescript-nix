@@ -17,6 +17,10 @@
 
       perSystem = { config, pkgs, lib, system, ... }:
         rec {
+          legacyPackages = {
+            purescriptPackages = import ./pkgs { inherit pkgs; };
+          };
+
           formatter = treefmt-nix.lib.mkWrapper pkgs treefmt.config;
 
           treefmt.config = {
@@ -24,7 +28,9 @@
             programs.nixpkgs-fmt.enable = true;
           };
 
-          # overlayAttrs = { };
+          overlayAttrs = {
+            inherit (self.legacyPackages.${system}) purescriptPackages;
+          };
         };
     };
 }

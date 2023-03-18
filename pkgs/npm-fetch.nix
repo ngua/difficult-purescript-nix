@@ -1,4 +1,5 @@
-{ stdenv
+{ lib
+, stdenv
 , nodejs
 , pname
 , version
@@ -27,4 +28,7 @@ stdenv.mkDerivation {
     cp -r ./node_modules/ $out/node_modules
     ln -s $out/node_modules/.bin/${pname} $out/bin/
   '';
+  meta = {
+    sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
+  };
 }

@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 let
-  plib = import ../lib { inherit pkgs; };
+  plib = import ../lib { inherit pkgs lib; };
   versions = import ./versions.nix { inherit pkgs lib plib; };
 in
 versions // rec {

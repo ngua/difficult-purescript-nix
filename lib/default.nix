@@ -1,7 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
-  inherit (pkgs) lib;
   shortVersion = x:
     lib.strings.removePrefix "v" (builtins.replaceStrings [ "." ] [ "_" ] x);
   mk = path: version: sha256s:
@@ -14,7 +13,11 @@ let
   mkNpmFetch = pname: version: sha256:
     lib.nameValuePair
       "${pname}-${shortVersion version}"
-      (pkgs.callPackage ../pkgs/npm-fetch.nix { inherit pname version sha256; });
+      (
+        pkgs.callPackage ../pkgs/npm-fetch.nix {
+          inherit pname version lib sha256;
+        }
+      );
 in
 rec {
   inherit shortVersion mkNpmFetch;
